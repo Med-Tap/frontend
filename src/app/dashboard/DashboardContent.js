@@ -23,6 +23,7 @@ function classNames(...classes) {
 }
 
 export default function DashboardContent({ user }) {
+  
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isPersonalInformation, setIsPersonalInformation] = useState(true);
   const [isEmergencyContact, setIsEmergencyContact] = useState(false);

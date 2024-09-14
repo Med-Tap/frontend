@@ -10,7 +10,6 @@ export const GET = handleAuth({
   callback: handleCallback({
     afterCallback: async (req, res, session) => {
       const decoded = jwt.decode(res.idToken);
-
       const { email, given_name, family_name } = decoded;
       try {
         // Make the API call to your server
