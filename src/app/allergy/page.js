@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import {
   Dialog,
   DialogBackdrop,
@@ -15,17 +14,17 @@ import {
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import PersonalInfo from "../components/Personalnfo";
+import EmergencyInfo from "../components/EmergencyInfo";
+import AllergyTable from "../components/AllergyTable";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-export default function DashboardContent({ user }) {
+export default function dashboard(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isPersonalInformation, setIsPersonalInformation] = useState(true);
+  const [isPersonalInformation, setIsPersonalInformation] = useState(false);
   const [isEmergencyContact, setIsEmergencyContact] = useState(false);
-  const [isAllergy, setIsAllergy] = useState(false);
+  const [isAllergy, setIsAllergy] = useState(true);
   const [isImmunization, setIsImmunization] = useState(false);
 
   const navigation = [
@@ -125,28 +124,6 @@ export default function DashboardContent({ user }) {
                         </li>
                       ))}
                     </ul>
-                  </li>
-                  <li className="mt-auto">
-                    <a
-                      href="/api/auth/logout"
-                      className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6 text-gray-400 group-hover:text-indigo-600"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                        />
-                      </svg>
-                      Log out
-                    </a>
                   </li>
                 </ul>
               </nav>
@@ -255,7 +232,7 @@ export default function DashboardContent({ user }) {
       <main className="lg:pl-72">
         <div className="xl:pr-96">
           <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
-            {<PersonalInfo></PersonalInfo>}
+            {<AllergyTable></AllergyTable>}
           </div>
         </div>
       </main>
