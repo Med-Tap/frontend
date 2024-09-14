@@ -14,21 +14,24 @@ export const GET = handleAuth({
       const { email, given_name, family_name } = decoded;
       try {
         // Make the API call to your server
-        const apiResponse = await fetch('http://localhost:8080/user/create', {
+        const userEsists = await fetch(`${process.env.SERVER_URL}/user/get/${email}`, {
+          method: 'GET',
+        }); 
+        console.log(userEsists.isExisting)
+        if(!userEsists.isExisting){
+          const apiResponse = await fetch(`${process.env.SERVER_URL}/user/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ email, given_name, family_name }),  // Customize based on API requirements
         });
-
         // If the API call is unsuccessful, throw an error
         if (!apiResponse.ok) {
           throw new Error('Failed to save user details',apiResponse);
         }
+        }
 
-        // On success, redirect the user to /dashboard
-        // return NextResponse.redirect(new URL('/dashboard', process.env.AUTH0_BASE_URL));
       } catch (error) {
         console.error('API call failed:', error);
 
