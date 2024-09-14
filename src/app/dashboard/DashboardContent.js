@@ -246,3 +246,4 @@ export default function DashboardContent({ user }) {
 		</div>
 	);
 }
+

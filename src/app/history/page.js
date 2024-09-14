@@ -9,6 +9,7 @@ import {
   UsersIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import EmergencyInfo from '../components/EmergencyInfo';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -168,7 +169,7 @@ return (
 
         <main className="lg:pl-72">
           <div className="xl:pr-96">
-            <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">{/* Main area */}</div>
+            <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">{<EmergencyInfo></EmergencyInfo>}</div>
           </div>
         </main>
 
