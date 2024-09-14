@@ -15,13 +15,13 @@ function classNames(...classes) {
 }
 export default function dashboard(props){
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [isPersonalInformation, setIsPersonalInformation] = useState(true)
+  const [isPersonalInformation, setIsPersonalInformation] = useState(false)
   const [isHistory, setIsHistory] = useState(false)
   const [isDocuments, setIsDocuments] = useState(false)
-  const [isReports, setIsReports] = useState(false)
+  const [isReports, setIsReports] = useState(true)
 
   const navigation = [
-    { name: 'Personal Information', href: '#', icon: UsersIcon, current: isPersonalInformation },
+    { name: 'Personal Information', href: '/dashboard', icon: UsersIcon, current: isPersonalInformation },
     { name: 'History', href: '/history', icon: CalendarIcon, current: isHistory },
     { name: 'Documents', href: '/documents', icon: DocumentDuplicateIcon, current: isDocuments },
     { name: 'Reports', href: '/reports', icon: ChartPieIcon, current: isReports },
