@@ -14,7 +14,6 @@ import {
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import EmergencyInfo from "../components/EmergencyInfo";
 import AllergyTable from "../components/AllergyTable";
 
 function classNames(...classes) {
