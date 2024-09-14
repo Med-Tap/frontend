@@ -15,7 +15,7 @@ import {
   UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import PersonalInfo from "../components/Personalnfo";
+import PersonalInfo from "../components/PersonalInfo";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
