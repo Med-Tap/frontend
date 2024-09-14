@@ -158,33 +158,38 @@ export default function AllergyTable() {
           </button>
         </div>
       </form>
-
-      <div className="mt-8">
+      <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div className="border">
-              <table className="border min-w-full divide-y divide-gray-300">
-                <thead className="flex items-center justify-center">
+            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
                   <tr>
-                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Allergen</th>
+                    <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Allergen</th>
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Severity</th>
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Symptoms</th>
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Treatment</th>
                     <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Diagnosed Date</th>
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {allergies.map((allergy, index) => (
-                    <tr key={index}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{allergy.allergen}</td>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {[
+                    { allergen: "Peanuts", severity: "Severe", symptoms: "Anaphylaxis, Hives", treatment: "Epinephrine auto-injector", diagnosedDate: "2022-03-15" },
+                    { allergen: "Dust Mites", severity: "Moderate", symptoms: "Sneezing, Runny nose", treatment: "Antihistamines", diagnosedDate: "2021-09-22" },
+                    { allergen: "Penicillin", severity: "Mild", symptoms: "Rash", treatment: "Avoid medication", diagnosedDate: "2020-11-30" },
+                    { allergen: "Latex", severity: "Moderate", symptoms: "Itching, Swelling", treatment: "Avoidance, Corticosteroids", diagnosedDate: "2023-01-07" },
+                    { allergen: "Shellfish", severity: "Severe", symptoms: "Difficulty breathing, Nausea", treatment: "Epinephrine auto-injector", diagnosedDate: "2022-07-19" }
+                  ].map((allergy, index) => (
+                    <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{allergy.allergen}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{allergy.severity}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{allergy.symptoms}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{allergy.treatment}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{allergy.diagnosedDate}</td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a href="#" className="text-indigo-600 hover:text-indigo-900">
                           Edit<span className="sr-only">, {allergy.allergen}</span>
                         </a>
@@ -197,6 +202,8 @@ export default function AllergyTable() {
           </div>
         </div>
       </div>
+
+      
     </div>
   );
 }
