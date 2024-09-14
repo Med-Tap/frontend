@@ -24,11 +24,11 @@ export const GET = handleAuth({
 
         // If the API call is unsuccessful, throw an error
         if (!apiResponse.ok) {
-          throw new Error('Failed to save user details');
+          throw new Error('Failed to save user details',apiResponse);
         }
 
         // On success, redirect the user to /dashboard
-        return NextResponse.redirect(new URL('/dashboard', process.env.AUTH0_BASE_URL));
+        // return NextResponse.redirect(new URL('/dashboard', process.env.AUTH0_BASE_URL));
       } catch (error) {
         console.error('API call failed:', error);
 
