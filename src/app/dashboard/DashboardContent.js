@@ -185,7 +185,7 @@ export default function DashboardContent({ user }) {
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
               <li>
                 <ul role="list" className="-mx-2 space-y-1">
-                  <div className="pb-2 flex items-center space-x-2">
+                  <div className="flex items-center space-x-2">
                     <input
                       id="hashID"
                       name="hashID"
