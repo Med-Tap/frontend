@@ -44,7 +44,7 @@ export default function dashboard(props) {
 			icon: DocumentDuplicateIcon,
 			current: isDocuments,
 		},
-		{ name: "Reports", href: "#", icon: ChartPieIcon, current: isReports },
+		{ name: "Reports", href: "/reports", icon: ChartPieIcon, current: isReports },
 	];
 
 	const documents = [
