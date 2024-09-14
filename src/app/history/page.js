@@ -9,6 +9,7 @@ import {
   UsersIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import EmergencyInfo from '../components/EmergencyInfo';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -131,6 +132,28 @@ return (
                     ))}
                   </ul>
                 </li>
+                <li className="mt-auto pb-10">
+								<a
+									href="/api/auth/logout"
+									className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										fill="none"
+										viewBox="0 0 24 24"
+										strokeWidth={1.5}
+										stroke="currentColor"
+										className="w-6 h-6 text-gray-400 group-hover:text-indigo-600"
+									>
+										<path
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+										/>
+									</svg>
+									Log out
+								</a>
+							</li>
               </ul>
             </nav>
           </div>
@@ -146,7 +169,7 @@ return (
 
         <main className="lg:pl-72">
           <div className="xl:pr-96">
-            <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">{/* Main area */}</div>
+            <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">{<EmergencyInfo></EmergencyInfo>}</div>
           </div>
         </main>
 
