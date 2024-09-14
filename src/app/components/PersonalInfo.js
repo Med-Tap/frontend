@@ -1,37 +1,99 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 export default function PersonalInfo() {
+  const [formData, setFormData] = useState({
+    userName: "",
+    userPhone: "",
+    userEmail: "",
+    userInsurance: "",
+    userMRN: "",
+    userHeight: "",
+    userWeight: "",
+    userGender: "",
+    userAddress: "",
+    userZipCode: "",
+    userState: "",
+    userCountry: "",
+  });
+
+  // Handle initially loading the form
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/api/personal");
+        setFormData({
+          userName: response.data.userName,
+          userPhone: response.data.userPhone,
+          userEmail: response.data.userEmail,
+          userInsurance: response.data.userInsurance,
+          userMRN: response.data.userMRN,
+          userHeight: response.data.userHeight,
+          userGender: response.data.userGender,
+          userWeight: response.data.userWeight,
+          userAddress: response.data.userAddress,
+          userCity: response.data.userZipCode,
+          userZipCode: response.data.userZipCode,
+          userState: response.data.userState,
+          userCountry: response.data.userCountry,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      const updatedData = {
+        ...prevData,
+        [name]: value,
+      };
+      console.log(updatedData); // Print the updated form data
+      return updatedData;
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put("/api/personal", formData);
+      setPersonalData(response.data); // Update personal data state
+      alert("Data updated successfully!");
+    } catch (err) {
+      setError(err);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={() => handleSubmit}>
       <div className="space-y-12">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
           <h2 className="text-base font-semibold leading-7 text-gray-900">
-            Profile
+            Personal Information
           </h2>
         </div>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
-          <div>
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Personal Information
-            </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Use a permanent address where you can receive mail.
-            </p>
-          </div>
-
           <div className="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
             <div className="sm:col-span-3">
               <label
                 htmlFor="first-name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                First name
+                Full Name
               </label>
               <div className="mt-2">
                 <input
-                  id="first-name"
-                  name="first-name"
+                  id="userName"
+                  name="userName"
                   type="text"
                   autoComplete="given-name"
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -42,16 +104,20 @@ export default function PersonalInfo() {
                 htmlFor="last-name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Last name
+                Gender
               </label>
               <div className="mt-2">
-                <input
-                  id="last-name"
-                  name="last-name"
-                  type="text"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                <select
+                  id="userGender"
+                  name="userGender"
+                  onChange={handleInputChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option>He/Him</option>
+                  <option>She/Her</option>
+                  <option>They/Them</option>
+                  <option>Other</option>
+                </select>
               </div>
             </div>
 
@@ -66,10 +132,11 @@ export default function PersonalInfo() {
                   </label>
                   <div className="mt-2">
                     <input
-                      id="email"
-                      name="email"
+                      id="userEmail"
+                      name="userEmail"
                       type="email"
                       autoComplete="email"
+                      onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -84,10 +151,87 @@ export default function PersonalInfo() {
                   </label>
                   <div className="mt-2">
                     <input
-                      id="phone"
-                      name="phone"
+                      id="userPhone"
+                      name="userPhone"
                       type="tel"
                       autoComplete="tel"
+                      onChange={handleInputChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="sm:col-span-6">
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Height
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="userHeight"
+                      name="userHeight"
+                      onChange={handleInputChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Weight
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="userWeight"
+                      name="userWeight"
+                      onChange={handleInputChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="sm:col-span-6">
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Insurance Provider
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="userInsurance"
+                      name="userInsurance"
+                      onChange={handleInputChange}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Medical Record Number
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      id="userMRN"
+                      name="userMRN"
+                      onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
@@ -104,10 +248,11 @@ export default function PersonalInfo() {
               </label>
               <div className="mt-2">
                 <input
-                  id="street-address"
-                  name="street-address"
+                  id="userAddress"
+                  name="userAddress"
                   type="text"
                   autoComplete="street-address"
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -122,10 +267,11 @@ export default function PersonalInfo() {
               </label>
               <div className="mt-2">
                 <input
-                  id="city"
-                  name="city"
+                  id="userCity"
+                  name="userCity"
                   type="text"
                   autoComplete="address-level2"
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -140,10 +286,11 @@ export default function PersonalInfo() {
               </label>
               <div className="mt-2">
                 <input
-                  id="region"
-                  name="region"
+                  id="userState"
+                  name="userState"
                   type="text"
                   autoComplete="address-level1"
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -158,10 +305,11 @@ export default function PersonalInfo() {
               </label>
               <div className="mt-2">
                 <input
-                  id="postal-code"
-                  name="postal-code"
+                  id="userZipCode"
+                  name="userZipCode"
                   type="text"
                   autoComplete="postal-code"
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -176,9 +324,10 @@ export default function PersonalInfo() {
               </label>
               <div className="mt-2">
                 <select
-                  id="country"
-                  name="country"
+                  id="userCountry"
+                  name="userCountry"
                   autoComplete="country-name"
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>United States</option>
