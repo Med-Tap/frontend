@@ -16,6 +16,7 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import PersonalInfo from "../components/PersonalInfo";
+import AllergyTable from '../components/AllergyTable';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -270,7 +271,7 @@ export default function DashboardContent({ user }) {
       <main className="lg:pl-72">
         <div className="xl:pr-96">
           <div className="px-4 py-10 sm:px-6 lg:px-8 lg:py-6">
-            {<PersonalInfo></PersonalInfo>}
+            {isAllergy ? <AllergyTable /> : <PersonalInfo />}
           </div>
         </div>
       </main>
