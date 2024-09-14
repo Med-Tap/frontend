@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { AppWrapper } from "./sessionManager";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,6 +24,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <AppWrapper>
     <html lang="en">
         <UserProvider>
         <body
@@ -32,5 +34,6 @@ export default function RootLayout({ children }) {
         </body>
       </UserProvider>
     </html>
+    </AppWrapper>
   );
 }
