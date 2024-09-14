@@ -17,8 +17,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 const navigation = [
   { name: 'Product', href: '#' },
   { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
+  { name: 'About', href: '#' },
 ]
 const primaryFeatures = [
   {
@@ -342,22 +341,14 @@ export default function Home() {
           <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
             <div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
               <div className="flex">
-                <div className="relative flex items-center gap-x-4 rounded-full px-4 py-1 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  <span className="font-semibold text-indigo-600">We’re hiring</span>
-                  <span aria-hidden="true" className="h-4 w-px bg-gray-900/10" />
-                  <a href="#" className="flex items-center gap-x-1">
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    See open positions
-                    <ChevronRightIcon aria-hidden="true" className="-mr-2 h-5 w-5 text-gray-400" />
-                  </a>
-                </div>
+            
               </div>
               <h1 className="mt-10 max-w-lg text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                A better way to ship your projects
+                Instant Access, Critical Care
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Esse id magna consectetur fugiat non dolor in ad laboris magna laborum ea consequat. Nisi irure aliquip
-                nisi adipisicing veniam voluptate id. In veniam incididunt ex veniam adipisicing sit.
+              In emergencies, seconds count. Our NFC system securely stores critical medical data, 
+              instantly accessible to medical professionals with a tap.
               </p>
               <div className="mt-10 flex items-center gap-x-6">
                 <a
@@ -372,56 +363,17 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
-              <div className="relative rounded-lg shadow-xl  mx-auto overflow-hidden" style={{ width: '500px', height: '300px' }}>
+              <div className="relative rounded-lg shadow-xl mx-auto overflow-hidden" style={{ width: '500px', height: '300px' }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-400/30 via-pink-500/30 to-red-500/30"></div>
-                <div className="relative z-10 h-full w-full bg-white bg-opacity-70 backdrop-filter backdrop-blur-sm rounded-lg">
-                  {/* Credit card content can be added here if needed */}
+                <div className="relative z-10 h-full w-full bg-white bg-opacity-70 backdrop-filter backdrop-blur-sm rounded-lg flex items-center justify-center">
+                  <h2 className="text-6xl text-opacity-10 font-extrabold text-gray-800 tracking-wide opacity-80">MedTap</h2>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Logo cloud */}
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:grid-cols-6 sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none lg:grid-cols-5">
-            <img
-              alt="Transistor"
-              src="https://tailwindui.com/img/logos/158x48/transistor-logo-gray-400.svg"
-              width={158}
-              height={48}
-              className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-            />
-            <img
-              alt="Reform"
-              src="https://tailwindui.com/img/logos/158x48/reform-logo-gray-400.svg"
-              width={158}
-              height={48}
-              className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-            />
-            <img
-              alt="Tuple"
-              src="https://tailwindui.com/img/logos/158x48/tuple-logo-gray-400.svg"
-              width={158}
-              height={48}
-              className="col-span-2 max-h-12 w-full object-contain lg:col-span-1"
-            />
-            <img
-              alt="SavvyCal"
-              src="https://tailwindui.com/img/logos/158x48/savvycal-logo-gray-400.svg"
-              width={158}
-              height={48}
-              className="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1"
-            />
-            <img
-              alt="Statamic"
-              src="https://tailwindui.com/img/logos/158x48/statamic-logo-gray-400.svg"
-              width={158}
-              height={48}
-              className="col-span-2 col-start-2 max-h-12 w-full object-contain sm:col-start-auto lg:col-span-1"
-            />
-          </div>
-        </div>
+
 
         {/* Feature section */}
         <div className="mx-auto mt-32 max-w-7xl sm:mt-56 sm:px-6 lg:px-8">
