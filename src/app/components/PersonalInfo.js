@@ -1,50 +1,41 @@
 import React, { useState, useEffect } from "react";
 
-export default function PersonalInfo({ hashID }) {
-  const [formData, setFormData] = useState({
-    _id: "",
-    userName: "",
-    userPhone: "",
-    userEmail: "",
-    userInsurance: "",
-    userMRN: "",
-    userHeight: "",
-    userWeight: "",
-    userGender: "",
-    userAddress: "",
-    userZipCode: "",
-    userState: "",
-    userCountry: "",
-    userCity: "",
-  });
+export default function PersonalInfo({ hashID , personalInfoOfUser}) {
+// form fields
+const [userName, setUserName] = useState("");
+const [userMRN, setUserMRN] = useState("");
+const [userPhone, setUserPhone] = useState("");
+const [userEmail, setUserEmail] = useState("");
+const [userHeight, setUserHeight] = useState(0); // Assuming it's in a numeric format
+const [userWeight, setUserWeight] = useState(0); // Assuming it's in a numeric format
+const [userInsurance, setUserInsurance] = useState("");
+const [userHashedPassword, setUserHashedPassword] = useState("");
+const [userGender, setUserGender] = useState("Other"); // Default as per schema
+const [userAddress, setUserAddress] = useState("");
+const [userZipCode, setUserZipCode] = useState("");
+const [userCity, setUserCity] = useState("");
+const [userState, setUserState] = useState("");
+const [userCountry, setUserCountry] = useState("");
 
   const [error, setError] = useState(null); // Added error state
 
   // Handle initially loading the form
   useEffect(() => {
-    if (hashID) {
-      getPersonalByHash();
-    }
-  }, [hashID]);
-
-  const getPersonalByHash = async () => {
-    try {
-      const response = await fetch(
-        `https://medtap-backend.onrender.com/user-info/hash/${hashID}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (!response.ok) throw new Error("Network response was not ok");
-      const result = await response.json();
-      setFormData(result);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+    setUserName(personalInfoOfUser.userName || ""); // Default to empty string if the field is undefined
+    setUserMRN(personalInfoOfUser.userMRN || "");
+    setUserPhone(personalInfoOfUser.userPhone || "");
+    setUserEmail(personalInfoOfUser.userEmail || "");
+    setUserHeight(personalInfoOfUser.userHeight || 0); // Assuming userHeight is a number
+    setUserWeight(personalInfoOfUser.userWeight || 0); // Assuming userWeight is a number
+    setUserInsurance(personalInfoOfUser.userInsurance || "");
+    setUserHashedPassword(personalInfoOfUser.userHashedPassword || "");
+    setUserGender(personalInfoOfUser.userGender || "Other"); // Default to "Other"
+    setUserAddress(personalInfoOfUser.userAddress || "");
+    setUserZipCode(personalInfoOfUser.userZipCode || "");
+    setUserCity(personalInfoOfUser.userCity || "");
+    setUserState(personalInfoOfUser.userState || "");
+    setUserCountry(personalInfoOfUser.userCountry || "");
+  }, [personalInfoOfUser]);
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -54,7 +45,7 @@ export default function PersonalInfo({ hashID }) {
       [name]: value,
     }));
   };
-
+console.log("personalInfoOfUser :",personalInfoOfUser)
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -103,7 +94,7 @@ export default function PersonalInfo({ hashID }) {
                   id="userName"
                   name="userName"
                   type="text"
-                  value={formData.userName || ""} // Ensure controlled input
+                  value={userName || ""} // Ensure controlled input
                   autoComplete="given-name"
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -123,7 +114,7 @@ export default function PersonalInfo({ hashID }) {
                   id="userGender"
                   name="userGender"
                   onChange={handleInputChange}
-                  value={formData.userGender || ""} // Ensure controlled input
+                  value={userGender} // Ensure controlled input
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="">Select Gender</option>
@@ -152,7 +143,7 @@ export default function PersonalInfo({ hashID }) {
                       name="userEmail"
                       type="email"
                       autoComplete="email"
-                      value={formData.userEmail || ""} // Ensure controlled input
+                      value={userEmail || ""} // Ensure controlled input
                       onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -172,7 +163,7 @@ export default function PersonalInfo({ hashID }) {
                       name="userPhone"
                       type="tel"
                       autoComplete="tel"
-                      value={formData.userPhone || ""} // Ensure controlled input
+                      value={userPhone || ""} // Ensure controlled input
                       onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -195,7 +186,7 @@ export default function PersonalInfo({ hashID }) {
                       id="userHeight"
                       name="userHeight"
                       type="text"
-                      value={formData.userHeight || ""} // Ensure controlled input
+                      value={userHeight || ""} // Ensure controlled input
                       onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -214,7 +205,7 @@ export default function PersonalInfo({ hashID }) {
                       id="userWeight"
                       name="userWeight"
                       type="text"
-                      value={formData.userWeight || ""} // Ensure controlled input
+                      value={userWeight || ""} // Ensure controlled input
                       onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -237,7 +228,7 @@ export default function PersonalInfo({ hashID }) {
                       id="userInsurance"
                       name="userInsurance"
                       type="text"
-                      value={formData.userInsurance || ""} // Ensure controlled input
+                      value={userInsurance || ""} // Ensure controlled input
                       onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -256,7 +247,7 @@ export default function PersonalInfo({ hashID }) {
                       id="userMRN"
                       name="userMRN"
                       type="text"
-                      value={formData.userMRN || ""} // Ensure controlled input
+                      value={userMRN || ""} // Ensure controlled input
                       onChange={handleInputChange}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
@@ -277,7 +268,7 @@ export default function PersonalInfo({ hashID }) {
                   id="userAddress"
                   name="userAddress"
                   type="text"
-                  value={formData.userAddress || ""} // Ensure controlled input
+                  value={userAddress || ""} // Ensure controlled input
                   autoComplete="street-address"
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -297,7 +288,7 @@ export default function PersonalInfo({ hashID }) {
                   id="userCity"
                   name="userCity"
                   type="text"
-                  value={formData.userCity || ""} // Ensure controlled input
+                  value={userCity || ""} // Ensure controlled input
                   autoComplete="address-level2"
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -317,7 +308,7 @@ export default function PersonalInfo({ hashID }) {
                   id="userState"
                   name="userState"
                   type="text"
-                  value={formData.userState || ""} // Ensure controlled input
+                  value={userState || ""} // Ensure controlled input
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -337,7 +328,7 @@ export default function PersonalInfo({ hashID }) {
                   name="userZipCode"
                   type="text"
                   autoComplete="postal-code"
-                  value={formData.userZipCode || ""} // Ensure controlled input
+                  value={userZipCode || ""} // Ensure controlled input
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -357,7 +348,7 @@ export default function PersonalInfo({ hashID }) {
                   name="userCountry"
                   autoComplete="country-name"
                   onChange={handleInputChange}
-                  value={formData.userCountry || ""} // Ensure controlled input
+                  value={userCountry || ""} // Ensure controlled input
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option value="">Select Country</option>
