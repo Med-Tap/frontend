@@ -35,12 +35,7 @@ export default function DashboardContent() {
   const [userRole, setUserRole] = useState("")
   const [hashIDForm, setHashIDLocal] = useState("");
 
-// form fields
-const [firstName, setFirstName] = useState("");
-const [lastName, setLastName] = useState("");
-const [userEmail, setUserEmail] = useState("");
-const [userName, setUserName] = useState("");
-const [personalInfoOfUser, setPersonalInfoOfUser] = useState({})
+  const [personalInfoOfUser, setPersonalInfoOfUser] = useState({})
 
   const handleInputChange = (e) => {
     setHashIDLocal(e.target.value);
@@ -50,7 +45,7 @@ const [personalInfoOfUser, setPersonalInfoOfUser] = useState({})
   const handleSearchClick = async (e) => {
     console.log("In handel search click",hashIDForm);
     try {
-      await fetch(`http://localhost:8080/user/hash/${hashIDForm}`)
+      await fetch(`http://localhost:8080/user-info/hash/${hashIDForm}`)
       .then(response => {
        if (!response.ok) {
            return response.json().then(errorData => {
@@ -60,7 +55,6 @@ const [personalInfoOfUser, setPersonalInfoOfUser] = useState({})
        return response.json(); // Parse JSON response
    })
    .then(data => {
-     // Extract `hashId` from the response data
      console.log("user in use-effect: ",data)
      setPersonalInfoOfUser(data)
 

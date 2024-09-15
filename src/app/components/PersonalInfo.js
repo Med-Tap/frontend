@@ -40,20 +40,80 @@ const [userCountry, setUserCountry] = useState("");
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    switch (name) {
+      case "userName":
+        setUserName(value);
+        break;
+      case "userMRN":
+        setUserMRN(value);
+        break;
+      case "userPhone":
+        setUserPhone(value);
+        break;
+      case "userEmail":
+        setUserEmail(value);
+        break;
+      case "userHeight":
+        setUserHeight(value);
+        break;
+      case "userWeight":
+        setUserWeight(value);
+        break;
+      case "userInsurance":
+        setUserInsurance(value);
+        break;
+      case "userHashedPassword":
+        setUserHashedPassword(value);
+        break;
+      case "userGender":
+        setUserGender(value);
+        break;
+      case "userAddress":
+        setUserAddress(value);
+        break;
+      case "userZipCode":
+        setUserZipCode(value);
+        break;
+      case "userCity":
+        setUserCity(value);
+        break;
+      case "userState":
+        setUserState(value);
+        break;
+      case "userCountry":
+        setUserCountry(value);
+        break;
+      default:
+        break;
+    }
   };
-console.log("personalInfoOfUser :",personalInfoOfUser)
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
     setError(null);
-    console.log(formData)
+
+    // Construct formData object
+    const formData = {
+      userName,
+      userMRN,
+      userPhone,
+      userEmail,
+      userHeight,
+      userWeight,
+      userInsurance,
+      userHashedPassword,
+      userGender,
+      userAddress,
+      userZipCode,
+      userCity,
+      userState,
+      userCountry,
+    };
+
     try {
       const response = await fetch(
-        `https://medtap-backend.onrender.com/user-info/update/${formData._id}`,
+        `https://medtap-backend.onrender.com/user-info/update/${hashID}`,
         {
           method: "PUT",
           headers: {
@@ -65,7 +125,7 @@ console.log("personalInfoOfUser :",personalInfoOfUser)
       if (!response.ok) throw new Error("Network response was not ok");
       const result = await response.json();
       console.log(result);
-      setFormData(result); // Update formData with the response data
+      // Optionally update the form with the result if needed
     } catch (error) {
       setError(error.message);
     }
