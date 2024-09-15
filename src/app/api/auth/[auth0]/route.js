@@ -11,31 +11,26 @@ export const GET = handleAuth({
     afterCallback: async (req, res, session) => {
       const decoded = jwt.decode(res.idToken);
       const { email, given_name, family_name } = decoded;
+      const { setUser } = useAppContext();
+
       try {
         // Make the API call to your server
-        const userEsists = await fetch(
+        const existingUser = await fetch(
           `${process.env.SERVER_URL}/user/get/${email}`,
           {
             method: "GET",
           }
         );
-        console.log(userEsists.isExisting);
-        if (!userEsists.isExisting) {
-          const apiResponse = await fetch(
-            `${process.env.SERVER_URL}/user/create`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ email, given_name, family_name }), // Customize based on API requirements
-            }
-          );
-          //
-          const { setUser } = useAppContext();
-          console.log('Hi')
-          console.log(apiResponse);
-          setUser(apiResponse);
+        set(existingUser);
+        if (!userExists) {
+          const newUser = await fetch(`${process.env.SERVER_URL}/user/create`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, given_name, family_name }), // Customize based on API requirements
+          });
+          setUser(newUser);
 
           // If the API call is unsuccessful, throw an error
           if (!apiResponse.ok) {
