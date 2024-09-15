@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/20/solid";
-
+import useAppContext from "../sessionManager";
 const severityOptions = ["Mild", "Moderate", "Severe"];
 
 export default function AllergyTable() {
+  const { sessionID, setSessionID, user, setUser, hashID, setHashID } =
+    useAppContext();
   const [allergies, setAllergies] = useState([]);
   const [newAllergy, setNewAllergy] = useState({
     allergen: "",

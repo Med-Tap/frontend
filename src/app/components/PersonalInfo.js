@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
+import useAppContext from "../sessionManager";
 export default function PersonalInfo() {
+  const { hashID } = useAppContext();
+  console.log(hashID)
   const [formData, setFormData] = useState({
     userName: "",
     userPhone: "",
@@ -19,30 +20,28 @@ export default function PersonalInfo() {
 
   // Handle initially loading the form
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/personal");
-        setFormData({
-          userName: response.data.userName,
-          userPhone: response.data.userPhone,
-          userEmail: response.data.userEmail,
-          userInsurance: response.data.userInsurance,
-          userMRN: response.data.userMRN,
-          userHeight: response.data.userHeight,
-          userGender: response.data.userGender,
-          userWeight: response.data.userWeight,
-          userAddress: response.data.userAddress,
-          userCity: response.data.userZipCode,
-          userZipCode: response.data.userZipCode,
-          userState: response.data.userState,
-          userCountry: response.data.userCountry,
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
+    getPersonalByHash();
   }, []);
+
+  const getPersonalByHash = async () => {
+    try {
+      const response = await fetch(
+        `https://medtap-backend.onrender.com/get/${hashID}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) throw new Error("Network response was not ok");
+      const result = await response.json();
+      console.log(result);
+      setFormData(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -58,14 +57,25 @@ export default function PersonalInfo() {
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    setError(null);
     try {
-      const response = await axios.put("/api/personal", formData);
-      setPersonalData(response.data); // Update personal data state
-      alert("Data updated successfully!");
-    } catch (err) {
-      setError(err);
+      const response = await fetch(
+        `https://medtap-backend.onrender.com/user-info/${hashID}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      if (!response.ok) throw new Error("Network response was not ok");
+      const result = await response.json();
+      console.log(result);
+      setFormData(result);
+    } catch (error) {
+      setError(error.message);
     }
   };
 

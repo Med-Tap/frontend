@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PlusIcon } from "@heroicons/react/20/solid";
-
+import useAppContext from "../sessionManager";
 const people = [
   {
     name: "Lindsay Walton",
@@ -12,6 +12,8 @@ const people = [
 ];
 
 export default function ImmunizationTable() {
+  const { sessionID, setSessionID, user, setUser, hashID, setHashID } =
+    useAppContext();
   const [newImmunization, setNewImmunization] = useState({
     vaccine: "",
     dose: "",

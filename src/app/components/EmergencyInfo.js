@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
+import useAppContext from "../sessionManager";
 export default function EmergencyInfo() {
+  const { sessionID, setSessionID, user, setUser, hashID, setHashID } =
+    useAppContext();
   const [formData, setFormData] = useState({
     userName: "",
     userPhone: "",

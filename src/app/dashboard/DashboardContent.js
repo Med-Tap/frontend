@@ -16,20 +16,31 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import PersonalInfo from "../components/PersonalInfo";
-import AllergyTable from '../components/AllergyTable';
+import AllergyTable from "../components/AllergyTable";
+import useAppContext from "../sessionManager";
+import { useEffect } from "react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function DashboardContent({ user }) {
-  
+export default function DashboardContent() {
+  const { hashID, setHashID } = useAppContext();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isPersonalInformation, setIsPersonalInformation] = useState(true);
   const [isEmergencyContact, setIsEmergencyContact] = useState(false);
   const [isAllergy, setIsAllergy] = useState(false);
   const [isImmunization, setIsImmunization] = useState(false);
 
+  const [hashIDForm, setHashIDLocal] = useState("");
+
+  const handleInputChange = (e) => {
+    setHashIDLocal(e.target.value);
+  };
+
+  const handleSearchClick = (e) => {
+    setHashID(hashIDForm);
+  };
   const navigation = [
     {
       name: "Personal Information",
@@ -100,8 +111,7 @@ export default function DashboardContent({ user }) {
               </div>
               <nav className="flex flex-1 flex-col">
                 <ul role="list" className="flex flex-1 flex-col gap-y-7">
-                  <li>
-                  <div className="pb-2 flex items-center space-x-2">
+                  <div className="flex items-center space-x-2">
                     <input
                       id="hashID"
                       name="hashID"
@@ -116,6 +126,7 @@ export default function DashboardContent({ user }) {
                       Search
                     </button>
                   </div>
+                  <li>
                     <ul role="list" className="-mx-2 space-y-1">
                       {navigation.map((item) => (
                         <li key={item.name}>
@@ -192,10 +203,12 @@ export default function DashboardContent({ user }) {
                       id="hashID"
                       name="hashID"
                       type="text"
+                      onChange={handleInputChange}
                       placeholder="Enter the User NFC Key"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                     <button
+                      onClick={handleSearchClick}
                       type="submit"
                       className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
