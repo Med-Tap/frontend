@@ -1,22 +1,24 @@
 // context/AppContext.js
-"use client"
-import { createContext, useContext, useState } from 'react';
+"use client";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AppContext = createContext();
 
 export function AppWrapper({ children }) {
   const [sessionID, setSessionID] = useState(null);
 
-  // You can store other global states here too
   const [user, setUser] = useState(null);
+  const [hashID, setHashID] = useState(null);
 
   return (
-    <AppContext.Provider value={{ sessionID, setSessionID, user, setUser }}>
+    <AppContext.Provider
+      value={{ sessionID, setSessionID, user, setUser, hashID, setHashID }}
+    >
       {children}
     </AppContext.Provider>
   );
 }
 
-export function useAppContext() {
+export default function useAppContext() {
   return useContext(AppContext);
 }

@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { PlusIcon } from "@heroicons/react/20/solid";
+import useAppContext from "../sessionManager";
 const people = [
   {
     name: "Lindsay Walton",
@@ -9,26 +12,173 @@ const people = [
 ];
 
 export default function ImmunizationTable() {
+  const { sessionID, setSessionID, user, setUser, hashID, setHashID } =
+    useAppContext();
+  const [newImmunization, setNewImmunization] = useState({
+    vaccine: "",
+    dose: "",
+    date: "",
+    provider: "",
+    notes: "",
+  });
+
+  // State for managing form visibility
+  const [isFormVisible, setIsFormVisible] = useState(true);
+
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewImmunization((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Implement form submission logic here
+    console.log("Form submitted:", newImmunization);
+  };
+
+  // Toggle visibility
+  const toggleFormVisibility = () => {
+    setIsFormVisible((prevVisibility) => !prevVisibility);
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Users
+            Immunizations
           </h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the users in your account including their name, title,
-            email and role.
-          </p>
         </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Add user
-          </button>
-        </div>
+      </div>
+      <div className="space-y-6">
+        {/* Button to toggle form visibility */}
+        <button
+          type="button"
+          onClick={toggleFormVisibility}
+          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          {isFormVisible ? "Hide Form" : "Show Form"}
+        </button>
+
+        {/* Conditional rendering of the form */}
+        {isFormVisible && (
+          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+            <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="vaccine"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Vaccine
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="vaccine"
+                    id="vaccine"
+                    value={newImmunization.vaccine}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="dose"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Dose
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="dose"
+                    id="dose"
+                    value={newImmunization.dose}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="date"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Date
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="date"
+                    name="date"
+                    id="date"
+                    value={newImmunization.date}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="provider"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Provider
+                </label>
+                <div className="mt-2">
+                  <input
+                    type="text"
+                    name="provider"
+                    id="provider"
+                    value={newImmunization.provider}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-6">
+                <label
+                  htmlFor="notes"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Notes
+                </label>
+                <div className="mt-2">
+                  <textarea
+                    id="notes"
+                    name="notes"
+                    rows={3}
+                    value={newImmunization.notes}
+                    onChange={handleInputChange}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex items-center justify-end gap-x-6">
+              <button
+                type="submit"
+                className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                <PlusIcon
+                  className="-ml-0.5 mr-1.5 h-5 w-5"
+                  aria-hidden="true"
+                />
+                Add Immunization
+              </button>
+            </div>
+          </form>
+        )}
       </div>
       <div className="mt-8 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

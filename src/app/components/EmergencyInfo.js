@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-
+import useAppContext from "../sessionManager";
 export default function EmergencyInfo() {
+  const { sessionID, setSessionID, user, setUser, hashID, setHashID } =
+    useAppContext();
   const [formData, setFormData] = useState({
     userName: "",
     userPhone: "",
@@ -35,6 +36,25 @@ export default function EmergencyInfo() {
     };
     fetchData();
   }, []);
+
+  const getEmergencyByHash = async () => {
+    try {
+      const response = await fetch(
+        `https://medtap-backend.onrender.com/user-info/hash/${hashID}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) throw new Error("Network response was not ok");
+      const result = await response.json();
+      setFormData(result);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   // Handle form input changes
   const handleInputChange = (e) => {

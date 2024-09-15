@@ -1,7 +1,7 @@
+import useAppContext from "@/app/sessionManager";
 import { handleAuth, handleLogin, handleCallback } from "@auth0/nextjs-auth0";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-
 export const GET = handleAuth({
     login: handleLogin({
         returnTo: "/dashboard",
@@ -33,7 +33,7 @@ export const GET = handleAuth({
                 // Extract `hashId` from the response data
                 const hashId = data.hashId; // Access the `hashId` property
                 console.log('Hash ID:', hashId); // Use `hashId` as needed
-                return NextResponse.redirect(new URL("/api/auth/login", process.env.AUTH0_BASE_URL));
+                return NextResponse.redirect(new URL("/dashboard", process.env.AUTH0_BASE_URL));
             })
             } catch (error) {
                 console.error("API call failed:", error);
@@ -43,5 +43,4 @@ export const GET = handleAuth({
         },
     }),
 });
-
 export const POST = handleAuth();
