@@ -76,11 +76,40 @@ export default function DashboardContent() {
       roles: ["MEDICAL_PROFESSIONAL", "PATIENT"],
     },
   ];
-  // const filteredNavigation = navigation.filter(item =>
-  //   item.roles.includes(user.role) // Ensure the user has one of the roles specified for each item
-  // );
 
-  console.log("hash:",hash)
+  useEffect(() => {
+    // Fetch the user role
+    async function fetchHashId() {
+        try {
+           await fetch(`http://localhost:8080/user/hash/${hash.hashId}`)
+           .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw new Error(`API error: ${errorData.message || 'Unknown error'}`);
+                });
+            }
+            return response.json(); // Parse JSON response
+        })
+        .then(data => {
+          // Extract `hashId` from the response data
+          console.log("user in use-effect: ",data)
+          const role = data.role; // Access the `hashId` property
+          setUserRole(role)
+      })
+            
+        } catch (error) {
+            console.error("Failed to fetch hashId:", error);
+        }
+    }
+
+    fetchHashId();
+}, []); //
+
+  const filteredNavigation = navigation.filter(item =>
+    item.roles.includes(userRole) // Ensure the user has one of the roles specified for each item
+  );
+
+  console.log("filteredNavigation:",filteredNavigation, "userRole:",userRole)
   return (
     <div>
       <Dialog
@@ -143,7 +172,7 @@ export default function DashboardContent() {
                   </div>
                   <li>
                     <ul role="list" className="-mx-2 space-y-1">
-                      {navigation.map((item) => (
+                      {filteredNavigation.map((item) => (
                         <li key={item.name}>
                           <a
                             href={item.href}
@@ -230,7 +259,7 @@ export default function DashboardContent() {
                       Search
                     </button>
                   </div>
-                  {navigation.map((item) => (
+                  {filteredNavigation.map((item) => (
                     <li key={item.name}>
                       <a
                         href={item.href}
