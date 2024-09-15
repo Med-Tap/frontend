@@ -1,7 +1,11 @@
-import useAppContext from "@/app/sessionManager";
+import fs from 'fs';
+import path from 'path';
 import { handleAuth, handleLogin, handleCallback } from "@auth0/nextjs-auth0";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
+
+const filePath = path.join(process.cwd(),'src','app', 'hash.js');
+
 export const GET = handleAuth({
     login: handleLogin({
         returnTo: "/dashboard",
@@ -33,6 +37,13 @@ export const GET = handleAuth({
                 // Extract `hashId` from the response data
                 const hashId = data.hashId; // Access the `hashId` property
                 console.log('Hash ID:', hashId); // Use `hashId` as needed
+                if (!fs.existsSync(filePath)) {
+                  // Create the file if it does not exist
+                  fs.writeFileSync(filePath, `module.exports = { hashId: '' };`);
+              }
+
+              // Write hashId to the file
+              fs.writeFileSync(filePath, `module.exports = { hashId: '${hashId}' };`);
                 return NextResponse.redirect(new URL("/dashboard", process.env.AUTH0_BASE_URL));
             })
             } catch (error) {
