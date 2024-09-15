@@ -1,0 +1,1 @@
+module.exports = { hashId: 'a0aaae2' };

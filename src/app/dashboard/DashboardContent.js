@@ -19,6 +19,7 @@ import PersonalInfo from "../components/PersonalInfo";
 import AllergyTable from "../components/AllergyTable";
 import useAppContext from "../sessionManager";
 import { useEffect } from "react";
+import hash from "../hash";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -31,7 +32,10 @@ export default function DashboardContent() {
   const [isEmergencyContact, setIsEmergencyContact] = useState(false);
   const [isAllergy, setIsAllergy] = useState(false);
   const [isImmunization, setIsImmunization] = useState(false);
+  const [userRole, setUserRole] = useState("")
   const [hashIDForm, setHashIDLocal] = useState("");
+
+
 
   const handleInputChange = (e) => {
     setHashIDLocal(e.target.value);
@@ -48,27 +52,35 @@ export default function DashboardContent() {
       href: "/dashboard",
       icon: UsersIcon,
       current: isPersonalInformation,
+      roles: ["FIRST_RESPONDER", "MEDICAL_PROFESSIONAL", "PATIENT"],
     },
     {
       name: "Emergency Contact",
       href: "/emergency",
       icon: CalendarIcon,
       current: isEmergencyContact,
+      roles: ["FIRST_RESPONDER", "MEDICAL_PROFESSIONAL", "PATIENT"],
     },
     {
       name: "Allergy",
       href: "/allergy",
       icon: DocumentDuplicateIcon,
       current: isAllergy,
+      roles: ["FIRST_RESPONDER", "MEDICAL_PROFESSIONAL", "PATIENT"],
     },
     {
       name: "Immunizations",
       href: "/immunizations",
       icon: ChartPieIcon,
       current: isImmunization,
+      roles: ["MEDICAL_PROFESSIONAL", "PATIENT"],
     },
   ];
+  // const filteredNavigation = navigation.filter(item =>
+  //   item.roles.includes(user.role) // Ensure the user has one of the roles specified for each item
+  // );
 
+  console.log("hash:",hash)
   return (
     <div>
       <Dialog
@@ -105,7 +117,7 @@ export default function DashboardContent() {
             <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
               <div className="flex h-16 shrink-0 items-center">
                 <img
-                  alt="Your Company"
+                  alt="madtab"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   className="h-8 w-auto"
                 />
