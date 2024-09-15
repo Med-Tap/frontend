@@ -10,10 +10,6 @@ export function AppWrapper({ children }) {
   const [user, setUser] = useState(null);
   const [hashID, setHashID] = useState(null);
 
-  useEffect(() => {
-    console.log(user, hashID);
-  }, []);
-
   return (
     <AppContext.Provider
       value={{ sessionID, setSessionID, user, setUser, hashID, setHashID }}

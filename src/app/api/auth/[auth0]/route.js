@@ -1,3 +1,4 @@
+import useAppContext from "@/app/sessionManager";
 import { handleAuth, handleLogin, handleCallback } from "@auth0/nextjs-auth0";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
@@ -12,7 +13,6 @@ export const GET = handleAuth({
       const { email, given_name, family_name } = decoded;
       try {
         // Make the API call to your server
-        console.log(process.env.SERVER_URL);
         const userEsists = await fetch(
           `${process.env.SERVER_URL}/user/get/${email}`,
           {
@@ -31,6 +31,12 @@ export const GET = handleAuth({
               body: JSON.stringify({ email, given_name, family_name }), // Customize based on API requirements
             }
           );
+          //
+          const { setUser } = useAppContext();
+          console.log('Hi')
+          console.log(apiResponse);
+          setUser(apiResponse);
+
           // If the API call is unsuccessful, throw an error
           if (!apiResponse.ok) {
             throw new Error("Failed to save user details", apiResponse);
